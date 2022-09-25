@@ -55,13 +55,15 @@ public class FoxGown {
         // check howmany pairs are there for each element by traverse the array from end tail and find the 
         // first index where the fox[j] <= S and j> i
         int numofpairs = 0;
+        int endsearch = numofnewfoxes-1;
         for (int i = 0; i < numofnewfoxes; i++){
             int len_i = foxes[i];
             int max_len = S- len_i;
-            for (int j = numofnewfoxes-1; j> i; j--){
+            for (int j = endsearch; j> i; j--){
                 if (foxes[j]<=max_len){
                     //num of pairs should be incremtn by j-i
-                    numofpairs = numofpairs + (j-1);
+                    numofpairs = numofpairs + (j-i);
+                    endsearch = j;
                     break;
                 }
             }
