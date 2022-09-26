@@ -26,9 +26,9 @@ import java.util.Random;
 public class FoxGown {
     public static void main(String[] args) {
         // N number of foxes
-        int N = 10;
+        int N = 100;
         // size of the gown
-        int S = 10;
+        int S = 100;
         int[] foxes = new int[N];
         Random rand = new Random();
         for (int i = 0; i < N; i++) {
