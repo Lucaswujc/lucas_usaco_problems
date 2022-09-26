@@ -26,7 +26,7 @@ import java.util.Random;
 public class FoxGown {
     public static void main(String[] args) {
         // N number of foxes
-        int N = 10;
+        int N = 100;
         // size of the gown
         int S = 100;
         int[] foxes = new int[N];
@@ -59,25 +59,34 @@ public class FoxGown {
         // first index where the fox[j] <= S and j> i
         int numofpairs = 0;
         int endsearch = numofnewfoxes - 1;
-        for (int i = 0; i < numofnewfoxes; i++) {
+        int i = 0;
+        while(i < endsearch) {
             int len_i = foxes[i];
             int max_len = S - len_i;
-            for (int j = endsearch; j > i; j--) {
-                if (foxes[j] <= max_len) {
-                    // num of pairs should be incremtn by j-i
-                    numofpairs = numofpairs + (j - i);
-                    endsearch = j;
-                    break;
-                }
-            }
+            // for (int j = endsearch; j > i; j--) {
+            //  <= max_len) {
+            // e incremtn by j-i
+            // + (j - i);
+            // 
+            // 
+            // 
+            // }
+            endsearch = binarySearch(foxes, i, endsearch, max_len);
+            System.out.println(String.format("start = %d endsearch = %d", i, endsearch));
+            numofpairs = numofpairs + (endsearch -    i);
+            i = i+1;
         }
         System.out.println(numofpairs);
     }
 
-    int binarySearch(int[] input_array, int start, int end, int maxVal) {
+    public static int binarySearch(int[] input_array, int start, int end, int maxVal) {
+        if (start+1>=end) return end;
         int mid = (end + start) / 2;
-        int midVal = input_array[mid];
-
+        int  midVal   = input_array[mid];
+        /**
+         * System.out.println(String.format("start = %d, end = %d , mid= %d, midVal = %d maxval = %d",
+                start, end, mid, midVal, maxVal));
+        **/
         if (midVal < maxVal) {
             // the search for maxvalue is greater than the mid point,
             // the value we are looking for is between the mid and end
