@@ -26,9 +26,9 @@ import java.util.Random;
 public class FoxGown {
     public static void main(String[] args) {
         // N number of foxes
-        int N = 100;
+        int N = 100000;
         // size of the gown
-        int S = 100;
+        int S = 1000;
         int[] foxes = new int[N];
         Random rand = new Random();
         for (int i = 0; i < N; i++) {
@@ -57,7 +57,7 @@ public class FoxGown {
         // check howmany pairs are there for each element by traverse the array from end
         // tail and find the
         // first index where the fox[j] <= S and j> i
-        int numofpairs = 0;
+        long numofpairs = 0;
         int endsearch = numofnewfoxes - 1;
         int i = 0;
         while(i < endsearch) {
