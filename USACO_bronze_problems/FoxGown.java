@@ -28,7 +28,7 @@ public class FoxGown {
         // N number of foxes
         int N = 100000;
         // size of the gown
-        int S = 1000;
+        int S = 100000;
         int[] foxes = new int[N];
         Random rand = new Random();
         for (int i = 0; i < N; i++) {
@@ -71,7 +71,8 @@ public class FoxGown {
             // 
             // 
             // }
-            endsearch = binarySearch(foxes, i, endsearch, max_len);
+            //endsearch = binarySearch(foxes, i, endsearch, max_len);
+            endsearch = binarySearchIterative(foxes,i,endsearch,max_len);
             System.out.println(String.format("start = %d endsearch = %d", i, endsearch));
             numofpairs = numofpairs + (endsearch -    i);
             i = i+1;
@@ -79,6 +80,43 @@ public class FoxGown {
         System.out.println(numofpairs);
     }
 
+    /**
+     * non-recursitve implementation for the binary search 
+     */
+    public static int binarySearchIterative(int[] input_array, int start, int end, int maxVal){
+        while (start+1<end){
+            int mid = (end + start) / 2;
+            int midVal = input_array[mid];
+            if (midVal < maxVal) {
+                // the search for maxvalue is greater than the mid point,
+                // the value we are looking for is between the mid and end
+                start = mid;                
+            }
+            if (midVal > maxVal) {
+                // if the search for maxvalu is less than the mid point,
+                // adjust the end to mid and keep searching
+                end = mid;                
+            }
+            if (midVal == maxVal) {
+                // now there is a hit, we can keep moving forward until the
+                // find a value different than the maxval
+                int ret = mid; 
+                for (int j = mid; j <= end; j++) {
+                    ret = j;
+                    if (maxVal != input_array[j]) {                        
+                        // we can break here without going through the rest of logic
+                        break;
+                    }
+                }
+                return ret;
+            }
+            // System.out.println(String.format("start = %d, end = %d , mid= %d, midVal = %d maxval = %d",
+            //     start, end, mid, midVal, maxVal));
+        }
+        return end;
+    }
+
+    // binary search with recursive implementation 
     public static int binarySearch(int[] input_array, int start, int end, int maxVal) {
         if (start+1>=end) return end;
         int mid = (end + start) / 2;
