@@ -26,9 +26,9 @@ import java.util.Random;
 public class FoxGown {
     public static void main(String[] args) {
         // N number of foxes
-        int N = 100000;
+        int N = 10;
         // size of the gown
-        int S = 100000;
+        int S = 10;
         int[] foxes = new int[N];
         Random rand = new Random();
         for (int i = 0; i < N; i++) {
@@ -60,95 +60,72 @@ public class FoxGown {
         long numofpairs = 0;
         int endsearch = numofnewfoxes - 1;
         int i = 0;
-        while(i < endsearch) {
+        while (i < endsearch) {
             int len_i = foxes[i];
             int max_len = S - len_i;
-            // for (int j = endsearch; j > i; j--) {
-            //  <= max_len) {
-            // e incremtn by j-i
-            // + (j - i);
-            // 
-            // 
-            // 
-            // }
-            //endsearch = binarySearch(foxes, i, endsearch, max_len);
-            endsearch = binarySearchIterative(foxes,i,endsearch,max_len);
-            System.out.println(String.format("start = %d endsearch = %d", i, endsearch));
-            numofpairs = numofpairs + (endsearch -    i);
-            i = i+1;
+            // endsearch = binarySearch(foxes, i, endsearch, max_len);
+            endsearch = binarySearchIterative(foxes, i + 1, endsearch, max_len);
+            System.out
+                    .println(String.format("fox[%d] = %d , max_len = %d, start = %d endsearch = %d", 
+                    i, foxes[i], max_len, i + 1, endsearch));
+            // if there is no return, we need to break
+            if (endsearch == -1)
+                break;
+            numofpairs = numofpairs + (endsearch - i);
+            i = i + 1;
         }
         System.out.println(numofpairs);
     }
 
     /**
-     * non-recursitve implementation for the binary search 
+     * non-recursitve implementation for the binary search
      */
-    public static int binarySearchIterative(int[] input_array, int start, int end, int maxVal){
-        while (start+1<end){
+    public static int binarySearchIterative(int[] input_array, int start, int end, int maxVal) {
+        // before do binary search, a quick check whether we can directly return
+        if (input_array[end] <= maxVal)
+            return end ;
+        if (input_array[start]>= maxVal)
+            return -1 ;
+        while (start + 1 < end) {
             int mid = (end + start) / 2;
             int midVal = input_array[mid];
+            System.out.println(String.format(
+                    "start = %d, mid = %d, end = %d , startval = %d, midVal = %d, endval = %d,  ,maxval = %d", start,
+                    mid, end, input_array[start], midVal, input_array[end], maxVal));
             if (midVal < maxVal) {
                 // the search for maxvalue is greater than the mid point,
                 // the value we are looking for is between the mid and end
-                start = mid;                
+                start = mid;
             }
             if (midVal > maxVal) {
                 // if the search for maxvalu is less than the mid point,
                 // adjust the end to mid and keep searching
-                end = mid;                
+                end = mid;
             }
             if (midVal == maxVal) {
                 // now there is a hit, we can keep moving forward until the
                 // find a value different than the maxval
-                int ret = mid; 
+                int ret = mid;
                 for (int j = mid; j <= end; j++) {
-                    ret = j;
-                    if (maxVal != input_array[j]) {                        
+                    if (maxVal != input_array[j]) {
                         // we can break here without going through the rest of logic
                         break;
                     }
+                    ret = j;
                 }
+                // no more loops .
                 return ret;
             }
-            // System.out.println(String.format("start = %d, end = %d , mid= %d, midVal = %d maxval = %d",
-            //     start, end, mid, midVal, maxVal));
         }
-        return end;
+        // now we are having a low and a high, need to check what number to return
+        if (input_array[end] <= maxVal)
+            return end;
+        if (input_array[start]<=maxVal)
+            return start;
+
+        return -1;
     }
 
-    // binary search with recursive implementation 
-    public static int binarySearch(int[] input_array, int start, int end, int maxVal) {
-        if (start+1>=end) return end;
-        int mid = (end + start) / 2;
-        int  midVal   = input_array[mid];
-        /**
-         * System.out.println(String.format("start = %d, end = %d , mid= %d, midVal = %d maxval = %d",
-                start, end, mid, midVal, maxVal));
-        **/
-        if (midVal < maxVal) {
-            // the search for maxvalue is greater than the mid point,
-            // the value we are looking for is between the mid and end
-            start = mid;
-            end = binarySearch(input_array, start, end, maxVal);
-        }
-        if (midVal > maxVal) {
-            // if the search for maxvalu is less than the mid point,
-            // adjust the end to mid and keep searching
-            end = mid;
-            end = binarySearch(input_array, start, end, maxVal);
-        }
-        if (midVal == maxVal) {
-            // now there is a hit, we can keep moving forward until the
-            // find a value different than the maxval
-            for (int j = mid; j <= end; j++) {
-                if (maxVal != input_array[j]) {
-                    end = j;
-                    break;
-                }
-            }
-        }
-        return end;
-    }
 
     /**
      * Following section present a quick sort algorithm, you can find the
