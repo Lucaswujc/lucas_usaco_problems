@@ -15,7 +15,7 @@ public class TaskAssignments {
         }
 
         for(int i = 0; i < tasks; i++){
-            for(int j = tasklist[i][0]; j < cows; j= j+tasklist[i][1]+ 1){
+            for(int j = tasklist[i][0]; j < cows; j= j+tasklist[i][1]){
                 cowlist[j-1] = 1;
             }
         }
@@ -26,5 +26,6 @@ public class TaskAssignments {
             }
         }
         System.out.println(counter);
+        scan.close();
     }
 }
