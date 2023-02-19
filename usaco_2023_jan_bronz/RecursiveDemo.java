@@ -64,12 +64,17 @@ public class RecursiveDemo {
      *                                  1
      *                                  2
      *                                  3
-     *  if we can achieve this as desired state -1 , then problem is translated to after move 3 to C, how to move
-     *  1,2 from B-->C using A
+     *  if we can achieve this as desired state -1 step, then problem is translated to after move 3 to C, and then move
+     *  1,2 from B-->C using A as helper pol
      *   A             B                C
      *                 1
      *                 2
      *   3
+     *
+     *   so the problem is three steps:
+     *      move n-1 disk from A-->B,
+     *      move 1 disk from A --> C,
+     *      move n-1 disk from B-->C
      *   psuedo code
      *   hanoitowner(n , from_pol,to_pol,helper_pol){
      *       honoitowner(n-1, from_pol, helper_pol, to_pol),
