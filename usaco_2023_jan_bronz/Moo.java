@@ -10,10 +10,18 @@ public class Moo {
     }
 
     /**
+     * Brutal force ??
+     * check each character, calculate whether it is possible to turn the substr(i,i+2) to MOO
+     * by doing this, it is obvious that for any position i (i >=1 i<= length -1), if string[i]
+     * is O , then it will be possible to construct MOO, otherwise, it is not
+     * so the problem translated to :
+
      * look for three letter string within the input which contains [M|O]O[M|O]
      * thinking process: if we can find an O, then we can use the three letter
      * string where O is the middle string to easily convert it to MOO.
      * if there is no such string, then -1
+     * operations will be trim left with i-1 , trim right with length - i - 2
+     * plus translate [M|O]O[M|O] to MOO.
      *
      * @param line
      */
