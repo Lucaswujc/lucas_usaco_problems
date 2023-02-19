@@ -128,27 +128,51 @@ public class debug {
      */
   }
 }
-import java.util.Arrays;
+/*
+ID: Lucas WU [lucaswu2]
+LANG: JAVA
+TASK: friday
+*/
+import java.io.*;
 import java.util.*;
-public class debug {
-    static int endsearch = 0;
-    static int binarysort(int[] array, int n, int num){
-    int low = 0;
-    int high = n;
-    int mid = 0;
-    while(mid < num){
-        mid = (low + high)/2;
-        if(mid > num){
-            low = low -1;
-            break;
-        }
- 
-        
-    }
-    endsearch = low;
-    return low;
-    
 
+public class debug {
+  public static void main (String [] args) throws IOException {
+    // Use BufferedReader rather than RandomAccessFile; it's much faster
+    BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
+    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("debug.out")));
+    //StringTokenizer st = new StringTokenizer(scan.readLine());
+    for(int i = 1; i <= 10000; i++){
+      System.out.print(i + 93324 + " ");
+    }
+    /*int t = Integer.parseInt(st.nextToken());
+    while(t>0){
+      st = new StringTokenizer(scan.readLine());
+      st = new StringTokenizer(scan.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int m = Integer.parseInt(st.nextToken());
+      Boolean ok =true;
+      String[][] cases = new String[m][2];
+      for(int i = 0; i < m; i++){
+        st = new StringTokenizer(scan.readLine());
+        cases[i][0] = st.nextToken();
+        cases[i][1] = st.nextToken();
+      }
+      for(int i =0; i <n; i++){
+        
+      }
+      if(ok){
+        System.out.println("OK");
+      }else{
+        System.out.println("LIE");
+      }
+      t--;
+    }
+    */
+  
+    
+    
+    
     }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -158,51 +182,41 @@ public class debug {
         for (int i = 0; i < N; i++) {
             foxes[i] = scan.nextInt();
         }
-        quickSort(foxes, 0, N - 1);
-        int numofnewfoxes = 0;
-        for (int i = N - 1; i >= 0; i--) {
-            if (foxes[i] <= S) {
-                numofnewfoxes = i + 1;
-                break;
-            }
+      }
+      if(extra){
+        for(int j = n-1; j >= 0; j--){
+          if(ans[j] == '.'){
+            anspatches++;
+            ans[j] = 'G';
+            break;
+          }
         }
-        int numofpairs = 0;
-        endsearch = numofnewfoxes-1;
-        for (int i = 0; i < numofnewfoxes; i++){
-            int len_i = foxes[i];
-            int max_len = S- len_i;
-            int x = binarysort(foxes, endsearch, max_len);
-            int add = x-i;
-            if(add <= 0){
-                add = 0;
-            }
-            numofpairs = numofpairs + add;
+      }
+      extra = false;
+      for(int i = 0; i <n; i++){
+        if(cows[i] == 'H' && i -lasth > k){
+            extra = true;
         }
-        System.out.println(numofpairs);
-    }
-    static int partition(int array[], int low, int high) {
-        int pivot = array[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
-                i++;
-                int temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-
+      }
+      if(extra){
+      for(int j = n-1; j >= 0; j--){
+        if(ans[j] == '.'){
+            anspatches++;
+            ans[j] = 'H';
+            break;
+          }
         }
-        int temp = array[i + 1];
-        array[i + 1] = array[high];
-        array[high] = temp;
-        return (i + 1);
-    }
-
-    static void quickSort(int array[], int low, int high) {
-        if (low < high) {
-            int pi = partition(array, low, high);
-            quickSort(array, low, pi - 1);
-            quickSort(array, pi + 1, high);
-        }
-    }
+      }
+      System.out.println(anspatches);
+      for(int i =0; i < n; i++){
+        System.out.print(ans[i]);
+      }
+      System.out.println();
+      t--;
+    }   
+    */  
+    out.close();                         
+  }
 }
+
+
