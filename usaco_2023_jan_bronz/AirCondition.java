@@ -25,11 +25,12 @@ public class AirCondition {
         }
 
         //brutal force ???
-        //build a 101010 binary array to represent whether an air conditioner at location is used or not
+        //build a 101010 binary array to represent whether an air conditioner at location is used or not. Here i plan to use
+        // recursive functions
         //once we have such binary array, then we can iterate through this array and calculate the cost + whether
         // all cows are happy. then identify the min
         List<boolean[]> allConditions = new ArrayList<boolean[]>();
-        buildFullConditions(allConditions, null 0, M);
+        buildFullConditions(allConditions, null ,0, M);
         // iterate through the all conditions list and find the minimal cost , store result into a 
         // map<>
         Map<boolean[], Result> results = calculateResult(allConditions, airConditioners, cowStalls);
