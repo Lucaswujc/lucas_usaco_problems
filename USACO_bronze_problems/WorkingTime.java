@@ -32,5 +32,6 @@ public class WorkingTime {
             answers[i] = time[questions[i] - 1];
             System.out.println(answers[i]);
         }
+        scan.close();
     }
 }
