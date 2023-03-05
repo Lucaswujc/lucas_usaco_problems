@@ -27,7 +27,7 @@ public class Moo {
      */
     public static int solve(String line) {
         if (line.length() < 3) return -1; //nothing to do here, no solution
-        int ret = line.length();
+        int ret = Integer.MAX_VALUE;
 
         for (int i = 1; i < line.length() - 1; i++) {
             if (line.charAt(i) == 'O') {
@@ -36,9 +36,11 @@ public class Moo {
                 char afterO = line.charAt(i + 1);
                 int charsToTrimFromLeft = i - 1;
                 int charsToTrimFromRight = line.length() - i - 2;
-                ret = Math.min(ret, (charsToTrimFromLeft + charsToTrimFromRight + (beforeO == 'M' ? 0 : 1) + (afterO == 'O' ? 0 : 1)));
+                ret = Math.min(ret,
+                        (charsToTrimFromLeft + charsToTrimFromRight +
+                                (beforeO == 'M' ? 0 : 1) + (afterO == 'O' ? 0 : 1)));
             }
         }
-        return (ret != line.length()) ? ret : -1;
+        return (ret !=Integer.MAX_VALUE) ? ret : -1;
     }
 }

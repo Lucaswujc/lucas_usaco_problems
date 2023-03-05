@@ -1,13 +1,16 @@
 package usaco_2023_jan_bronz;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RecursiveDemo {
 
     public static void main(String[] args) {
-        int i = 5;
-        System.out.println("==============fibonacci sequence demo=============");
-        System.out.println(fibonacci(i,""));
-        System.out.println("==============binary string construction demo=============");
-        binaryStringDemo("", "", i);
+        int i = 60;
+//        System.out.println("==============fibonacci sequence demo=============");
+//        System.out.println(fibonacci(i, "", new HashMap<Integer, Long>()));
+//        System.out.println("==============binary string construction demo=============");
+//        binaryStringDemo("", "", i);
         System.out.println("==============hanoi tower demo=============");
         haoi(i, 'A', 'B', 'C');
     }
@@ -18,14 +21,28 @@ public class RecursiveDemo {
      * if i = 1 : F[1] = 1
      * F[i] = F[i-1] + F[i-2]
      */
-    static long fibonacci(int i, String indent) {
-        if (i == 0) return 0;
-        if (i == 1) return 1;
+    static long fibonacci(int i, String indent, Map<Integer, Long> cache) {
+        if (i == 0) {
+            cache.put(0, 0l);
+            return 0;
+        }
+        ;
+        if (i == 1) {
+            cache.put(1, 1l);
+            return 1;
+        }
         indent += "\t";
-        System.out.println(indent + String.format("f[%d] = f[%d] + f[%d]", i, i-1 , i-2));
-        long fi1 = fibonacci(i - 1,indent);
-        long fi2 = fibonacci(i - 2,indent);
-        return fi1+fi2;
+        if (cache.containsKey(i)) {
+            System.out.println(String.format("cache hit for f[%d] = %d", i, cache.get(i)));
+            return cache.get(i);
+        } else {
+            System.out.println(indent + String.format("f[%d] = f[%d] + f[%d]", i, i - 1, i - 2));
+            long fi1 = fibonacci(i - 1, indent, cache);
+            long fi2 = fibonacci(i - 2, indent, cache);
+            cache.put(i, fi1 + fi2);
+            return fi1 + fi2;
+        }
+
     }
 
     /**
@@ -77,28 +94,29 @@ public class RecursiveDemo {
      * 1
      * 2
      * 3
-     * <p>
+
      * desired state
      * A             B               C
-     * 1
-     * 2
-     * 3
+     *                               1
+     *                               2
+     *                               3
+
      * if we can achieve this as desired state -1 step, then problem is translated to after move 3 to C, and then move
      * 1,2 from B-->C using A as helper pol
      * A             B                C
-     * 1
-     * 2
+     *               1
+     *               2
      * 3
-     * <p>
+
      * so the problem is three steps:
-     * move n-1 disk from A-->B,
+     * move n-1 disk from A-->B using C as the helper,
      * move 1 disk from A --> C,
-     * move n-1 disk from B-->C
+     * move n-1 disk from B-->C using A as the helper
      * psuedo code
      * hanoitowner(n , from_pol,to_pol,helper_pol){
-     * honoitowner(n-1, from_pol, helper_pol, to_pol),
-     * move_disk_n_from_<from_pol>_to_<to_pol>
-     * hanoitowner(n-1, helper_pol, to_pol, from_pol)
+     *      honoitowner(n-1, from_pol, helper_pol, to_pol),
+     *      move_disk_n_from_<from_pol>_to_<to_pol>
+     *      hanoitowner(n-1, helper_pol, to_pol, from_pol)
      * }
      */
     static void haoi(int n, char from_rod,
