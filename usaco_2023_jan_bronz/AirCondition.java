@@ -14,14 +14,18 @@ public class AirCondition {
         int M = scanner.nextInt();
         CowStalls[] cowStalls = new CowStalls[N];
         for (int i = 0; i < N; i++) {
-            String line = scanner.nextLine();
-            int[] tokens = Arrays.stream(line.split(" ")).mapToInt(x -> Integer.valueOf(x)).toArray();
-            cowStalls[i] = new CowStalls(tokens[0], tokens[1], tokens[2]);
+            int a = scanner.nextInt();
+            int b = scanner.nextInt();
+            int c = scanner.nextInt();
+            cowStalls[i] = new CowStalls(a, b, c);
         }
         AirConditioner[] airConditioners = new AirConditioner[M];
         for (int i = 0; i < M; i++) {
-            int[] tokens = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(x -> Integer.valueOf(x)).toArray();
-            airConditioners[i] = new AirConditioner(tokens[0], tokens[1], tokens[2], tokens[3]);
+            int a = scanner.nextInt();
+            int b = scanner.nextInt();
+            int c = scanner.nextInt();
+            int d = scanner.nextInt();
+            airConditioners[i] = new AirConditioner(a,b,c,d);
         }
 
         //brutal force ???
