@@ -4,6 +4,7 @@ import java.lang.Math.*;
 
 public class usaco2 {
   static PrintStream out = System.out;
+
   static Boolean checkWhetherToPrint(int startx, int starty, char[][] finalPicture, char[][] stamp, int k) {
     int stampx = 0;
     int stampy = 0;
@@ -54,15 +55,15 @@ public class usaco2 {
   static void testRotateStamp() {
     char[][] input = {
         { '1', '1' },
-        { '0', '1' }
-    };
-    char[][] expected = {
-        { '1', '1' },
         { '0', '0' }
     };
-    char[][] result = rotateStamp(input, input.length);
+    char[][] expected = {
+        { '0', '1' },
+        { '0', '1' }
+    };
+    char[][] result = rotateStamp(input);
     boolean comparersult = compareTwoCanvases(expected, result);
-    assert comparersult==true;
+    assert comparersult == true;
     out.println("rotate stamp succeeded");
 
   }
@@ -82,6 +83,21 @@ public class usaco2 {
       }
     }
     return true;
+  }
+
+  static char[][] rotateStamp(char[][] stamp) {
+    // create array, here we are not assuming the stamp is square, what if it is
+    // a rectangle A X B rotate will becomes B x A
+
+    int A = stamp.length;
+    int B = stamp[0].length;
+    char[][] newStamp = new char[B][A];
+    for (int i = 0; i < stamp.length; i++) {
+      for (int j = 0; j < stamp[i].length; j++) {
+        newStamp[j][A - i - 1] = stamp[i][j];
+      }
+    }
+    return newStamp;
   }
 
   static char[][] rotateStamp(char[][] matrix, int M) {
@@ -111,53 +127,54 @@ public class usaco2 {
   public static void main(String[] args) throws IOException {
     testRotateStamp();
     // BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
-    // PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("usaco2.out")));
+    // PrintWriter out = new PrintWriter(new BufferedWriter(new
+    // FileWriter("usaco2.out")));
     // StringTokenizer st = new StringTokenizer(scan.readLine());
     // int t = Integer.parseInt(st.nextToken());
     // while (t > 0) {
-    //   st = new StringTokenizer(scan.readLine());
-    //   st = new StringTokenizer(scan.readLine());
-    //   int n = Integer.parseInt(st.nextToken());
-    //   char[][] finalPicture = new char[n][n];
-    //   char[][] currentCanvas = new char[n][n];
-    //   for (int i = 0; i < n; i++) {
-    //     st = new StringTokenizer(scan.readLine());
-    //     String s = st.nextToken();
-    //     for (int j = 0; j < n; j++) {
-    //       finalPicture[i][j] = s.charAt(j);
-    //     }
-    //   }
-    //   for (int i = 0; i < n; i++) {
-    //     for (int j = 0; j < n; j++) {
-    //       currentCanvas[i][j] = '.';
-    //     }
-    //   }
-    //   st = new StringTokenizer(scan.readLine());
-    //   int k = Integer.parseInt(st.nextToken());
-    //   char[][] stamp = new char[k][k];
-    //   for (int i = 0; i < k; i++) {
-    //     st = new StringTokenizer(scan.readLine());
-    //     String s = st.nextToken();
-    //     for (int j = 0; j < k; j++) {
-    //       stamp[i][j] = s.charAt(j);
-    //     }
-    //   }
-    //   for (int rotate = 0; rotate < 4; rotate++) {
-    //     for (int i = 0; i < n - k + 1; i++) {
-    //       for (int j = 0; j < n - k + 1; j++) {
-    //         if (checkWhetherToPrint(i, j, finalPicture, stamp, k)) {
-    //           stampOnCurrentCanvas(currentCanvas, stamp, i, j, k);
-    //         }
-    //       }
-    //     }
-    //     stamp = rotateStamp(stamp, k);
-    //   }
-    //   if (compareCurrentCanvases(finalPicture, currentCanvas, n)) {
-    //     System.out.println("YES");
-    //   } else {
-    //     System.out.println("NO");
-    //   }
-    //   t--;
+    // st = new StringTokenizer(scan.readLine());
+    // st = new StringTokenizer(scan.readLine());
+    // int n = Integer.parseInt(st.nextToken());
+    // char[][] finalPicture = new char[n][n];
+    // char[][] currentCanvas = new char[n][n];
+    // for (int i = 0; i < n; i++) {
+    // st = new StringTokenizer(scan.readLine());
+    // String s = st.nextToken();
+    // for (int j = 0; j < n; j++) {
+    // finalPicture[i][j] = s.charAt(j);
+    // }
+    // }
+    // for (int i = 0; i < n; i++) {
+    // for (int j = 0; j < n; j++) {
+    // currentCanvas[i][j] = '.';
+    // }
+    // }
+    // st = new StringTokenizer(scan.readLine());
+    // int k = Integer.parseInt(st.nextToken());
+    // char[][] stamp = new char[k][k];
+    // for (int i = 0; i < k; i++) {
+    // st = new StringTokenizer(scan.readLine());
+    // String s = st.nextToken();
+    // for (int j = 0; j < k; j++) {
+    // stamp[i][j] = s.charAt(j);
+    // }
+    // }
+    // for (int rotate = 0; rotate < 4; rotate++) {
+    // for (int i = 0; i < n - k + 1; i++) {
+    // for (int j = 0; j < n - k + 1; j++) {
+    // if (checkWhetherToPrint(i, j, finalPicture, stamp, k)) {
+    // stampOnCurrentCanvas(currentCanvas, stamp, i, j, k);
+    // }
+    // }
+    // }
+    // stamp = rotateStamp(stamp, k);
+    // }
+    // if (compareCurrentCanvases(finalPicture, currentCanvas, n)) {
+    // System.out.println("YES");
+    // } else {
+    // System.out.println("NO");
+    // }
+    // t--;
     // }
     // System.out.println();
     // out.close();
@@ -204,58 +221,3 @@ public class usaco2 {
      */
   }
 }
-import java.io.*;
-import java.util.*;
-import java.lang.Math.*;
-
-public class usaco2 {
-  public static void main (String [] args) throws IOException {
-    BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
-    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("usaco2.out")));
-    StringTokenizer st = new StringTokenizer(scan.readLine());
-    int n = Integer.parseInt(st.nextToken());
-    int m = Integer.parseInt(st.nextToken());
-    int[][] cows = new int[n][3];
-    int[][] acs = new int[m][4];
-    for(int i = 0; i < n; i++){
-      st = new StringTokenizer(scan.readLine());
-      cows[i][0] = Integer.parseInt(st.nextToken());
-      cows[i][1] = Integer.parseInt(st.nextToken());
-      cows[i][2] = Integer.parseInt(st.nextToken());
-    }
-    for(int i = 0; i < m; i++){
-      st = new StringTokenizer(scan.readLine());
-      acs[i][0] = Integer.parseInt(st.nextToken());
-      acs[i][1] = Integer.parseInt(st.nextToken());
-      acs[i][2] = Integer.parseInt(st.nextToken());
-      acs[i][3] = Integer.parseInt(st.nextToken());
-    }
-    int answer = m*1000;
-    for (int mask = 0; mask < 1 << m; mask++) {
-      int[] numberLine = new int[101];
-      int totalCost = 0;
-      for (int j = 0; j < m; j++) {
-          if ((mask & (1 << j)) != 0) {
-              totalCost += acs[j][3];
-              for (int x = acs[j][0]; x <= acs[j][1]; x++) {
-                  numberLine[x] += acs[j][2];
-              }
-          }
-      }
-      boolean works = true;
-      for (int j = 0; j < n; j++) {
-          for (int x = cows[j][0]; x <= cows[j][1]; x++) {
-              if (numberLine[x] < cows[j][2]) {
-                  works = false;
-              }
-          }
-      }
-      if (works) {
-          answer = Math.min(answer, totalCost);
-      }
-    }
-    System.out.println(answer);
-    out.close();                                  
-  }
-}
-
