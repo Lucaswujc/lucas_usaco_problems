@@ -1,9 +1,7 @@
 package usaco_bronze_booster;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -138,4 +136,6 @@ public class LiveStockLineup {
         //Arrays.stream(input).forEach(s -> System.out.println(cows[s]));
         return true;
     }
+
+    
 }
