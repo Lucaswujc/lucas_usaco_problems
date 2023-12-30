@@ -1,7 +1,7 @@
 package usaco_bronze_booster;
 
 import java.util.Scanner;
-
+//@formatter:off
 /**
  * Race
  * [ Memory: 256 MB, CPU: 2 sec ]
@@ -84,6 +84,8 @@ import java.util.Scanner;
  * <p>
  * Problem credits: Nick Wu
  */
+//@formatter:on
+
 public class Race {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -128,6 +130,24 @@ public class Race {
             if (currentPosition >= endPosition && j > endSpeed)
                 ret = false;
         }
-        return ret;
+        /**
+         * instead of the iterative approach to find out true or false
+         * we can use sum for arithmetic sequence to calcualte the
+         * future position by starting --> end speed with 1 decrease
+         * this future position is the "would-be" position if the runner
+         * start with an intial speed and reduce 1 until the runner reach the end speed(inclusive)
+         * if future positon < length then true,
+         * otherwise, we need to check whether before the last second while runner
+         * runs at the endspeed, the future position has pass the finish line.
+         */
+        int futurePosition = startSpeed* (startSpeed+1)/2 - (endSpeed-1) * endSpeed/2 + currentPosition;
+        if(futurePosition < endPosition)
+            return true;
+        else{
+            if (futurePosition - endSpeed < endPosition)
+                return true;
+            return false;
+        }
+
     }
 }
