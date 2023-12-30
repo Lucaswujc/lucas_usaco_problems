@@ -1,4 +1,5 @@
 package usaco_bronze_booster;
+
 //@formatter:off
 /**
  * Swapity Swap [ Memory: 256 MB, CPU: 2 sec ]
@@ -42,6 +43,111 @@ package usaco_bronze_booster;
  * sample.
  */
 //@formatter:on
+import java.util.Scanner;
+import java.util.Arrays;
+
 public class SwapitySwap {
+    public static void main(String[] argsv) {
+        Scanner scan = new Scanner(System.in);
+        int N = scan.nextInt();
+        int[] cows = new int[N];
+        for (int i = 0; i < N; i++) {
+            cows[i] = i + 1;
+        }
+        int K = scan.nextInt();
+        int[][] operations = new int[2][2];
+        for (int j = 0; j < 2; j++) {
+            operations[j][0] = scan.nextInt() - 1;
+            operations[j][1] = scan.nextInt() - 1;
+        }
+
+        scan.close();
+        solution1(Arrays.copyOf(cows, cows.length), operations, K);
+        solution2(operations, K, N);
+    }
+
+    /**
+     * solution 2 is to for each cow, we can identify that after X iterations, this cow will go back
+     * to its original location. then we can establish a array of X, then for each cow, we can use K
+     * % Xi to identify its location after K iterations.
+     * 
+     * @param cows
+     * @param operations
+     * @param K
+     */
+    public static void solution2(int[][] operations, int K, int N) {
+        int[] cows = new int[N];
+        for (int i = 0; i < cows.length; i++) {
+            int xi = 1;
+            int nextLocation = getNextLocation(i,operations);
+            while (i != nextLocation) {
+                xi += 1;
+                nextLocation = getNextLocation(nextLocation, operations);
+            }
+            nextLocation = i;
+            for (int j = 0; j < K % xi; j++) {
+                nextLocation = getNextLocation(nextLocation, operations);
+            }
+            cows[nextLocation] = i + 1;
+        }
+    }
+
+    public static int getNextLocation(int currentLocation, int[][] operations) {
+        for (int i = 0; i < operations.length; i++) {
+            if (currentLocation <= operations[i][1] && currentLocation >= operations[i][0])
+                currentLocation = operations[i][0] + operations[i][1] - currentLocation;
+        }
+        return currentLocation;
+    }
+
+    /**
+     * consider the situation that aftre X operations, the cows array returns to the original state,
+     * then we only need to run K%X + X iterations. the task is to find the X b
+     * 
+     * @param cows
+     * @param operations
+     * @param K
+     */
+    public static void solution1(int[] cows, int[][] operations, int K) {
+        int counter = 0;
+        while (true) {
+            for (int j = 0; j < 2; j++) {
+                int start = operations[j][0];
+                int end = operations[j][1];
+                swap(cows, start, end);
+            }
+            counter++;
+            if (check(cows))
+                break;
+        }
+        for (int i = 0; i < K % counter; i++) {
+            for (int j = 0; j < 2; j++) {
+                int start = operations[j][0];
+                int end = operations[j][1];
+                swap(cows, start, end);
+            }
+        }
+        for (int i = 0; i < cows.length; i++) {
+            System.out.println(cows[i]);
+        }
+    }
+
+    public static boolean check(int[] cows) {
+        for (int i = 0; i < cows.length; i++) {
+            if (cows[i] != i + 1)
+                return false;
+        }
+        return true;
+    }
+
+    public static void swap(int[] cows, int start, int end) {
+        while (start < end) {
+            int temp = cows[start];
+            cows[start] = cows[end];
+            cows[end] = temp;
+            start++;
+            end--;
+        }
+    }
 
 }
