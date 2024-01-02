@@ -79,12 +79,15 @@ class Contact implements Comparable<Contact>{
     }
 
     @Override
-    public int compareTo(Contact o) {
-        if (o ==null)
+    public int compareTo(Contact other) {
+        if (other ==null)
             return -1;
-        return this.time - o.time;
+        return this.time - other.time;
     }
 
+    public String toString() {
+        return String.format("%d %d %d", time, c1, c2);
+    }
 }
 public class ContactTracing {
     public static void main(String[] args) {
@@ -99,13 +102,22 @@ public class ContactTracing {
             contacts[i] = new Contact(scan.nextInt(), scan.nextInt()-1, scan.nextInt()-1);
         }
         Arrays.sort(contacts);
+        System.out.println("--------------------------");
+        for (Contact c : contacts) {
+            System.out.println(c.toString());
+
+        }
+        System.out.println("--------------------------");
         Set<Integer> p0 = new HashSet<>();
         int minK = Integer.MAX_VALUE;
         int maxK = Integer.MIN_VALUE;
         for (int i = 0; i < N; i++) {
             if (cows[i] == '1') {
                 // possible patient zero ; 
-                for (int k = 0; k < contacts.length; k++) {
+                for (int k = 0; k <= contacts.length; k++) {
+                    if (i == 1 && k == 2) {
+                        System.out.println("break");
+                    }
                     if (simulate(i, k, cows, contacts)) {
                         p0.add(i);
                         if (k < minK)
@@ -116,8 +128,10 @@ public class ContactTracing {
                 }
             }
         }
+
+        Boolean a = true;
         String maxks = String.valueOf(maxK);
-        if (maxK == contacts.length - 1)
+        if (maxK == contacts.length)
             maxks = "Infinity";
         System.out.println(String.format("%d %d %s", p0.size(), minK,maxks));
     }
@@ -137,16 +151,29 @@ public class ContactTracing {
                     cowsSpreadCycles[healthyCow] = spreadcount;
                     cowsSpreadCycles[spreadingCow] -= 1;
                 }
+            } else if (simulatedCows[c.c1] == '1' && simulatedCows[c.c2] == '1') {
+                cowsSpreadCycles[c.c1] -= 1;
+                cowsSpreadCycles[c.c2] -= 1; 
             }
         }
         boolean ret = true;
+        printSimulation(patient0, spreadcount, simulatedCows, cows, cowsSpreadCycles);
         for (int i = 0; i < cows.length; i++) {
             if (cows[i] != simulatedCows[i]) {
                 ret = false;
                 break;
             }
         }
+        if (ret) {
+            System.out.println("success");
+        }
         return ret;
     }
 
+    public static void printSimulation(int p0, int k, char[]simulatedCows,char[] cows,int[] cowsSpreadCycles){
+        System.out.println(String.format("p0 = %d, k = %d", p0, k));
+        System.out.println("Simulation = " + Arrays.toString(simulatedCows));
+        System.out.println("cows       =  " + Arrays.toString(cows)); 
+        System.out.println("cowsSpreadCycles = " + Arrays.toString(cowsSpreadCycles));
+    }
 }
