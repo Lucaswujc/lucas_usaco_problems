@@ -1,6 +1,4 @@
-package sortingalgorithmns;
-import java.util.Arrays;
-import java.util.Collections;
+package SortingAlgorithmns;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
@@ -63,6 +61,7 @@ public class FarmFence {
             }
         }
         System.out.println(min);
+        scan.close();
        //sort the list and get the smallest area from results
 
     }
