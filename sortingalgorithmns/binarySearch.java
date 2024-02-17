@@ -1,8 +1,6 @@
-package sortingalgorithmns;
+package SortingAlgorithmns;
 
 import java.util.*;
-import java.lang.Math.*;
-import java.util.Arrays.*;
 public class binarySearch {
     static int upperBound(int x, int[] array){
         int l = 0;
@@ -45,6 +43,7 @@ public class binarySearch {
         int upperBound = upperBound(upper, array);
         int lowerBound = lowerBound(lower, array);
         System.out.println(upperBound-lowerBound);
+        scan.close();
     }
 
 }
