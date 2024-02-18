@@ -1,4 +1,4 @@
-package USACO_bronze_problems;
+package USACO_bronzeclass_problems;
 
 import java.util.*;
 
@@ -10,6 +10,7 @@ public class RubicsCube {
                 {1, 2, 3, 4},
                 {8, 7, 6, 5}
         };
+        @SuppressWarnings("unused")
         int[][] y = {
                 {1, 2, 3, 4},
                 {8, 7, 6, 5}
