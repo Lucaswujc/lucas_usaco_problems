@@ -1,4 +1,6 @@
+
 package bronze2022to2023;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -6,12 +8,13 @@ public class RecursiveDemo {
 
     public static void main(String[] args) {
         int i = 60;
-        System.out.println("==============fibonacci sequence demo=============");
-        System.out.println(fibonacci(i, "", new HashMap<Integer, Long>()));
-        System.out.println("==============binary string construction demo=============");
-        binaryStringDemo("", "", i);
-        System.out.println("==============hanoi tower demo=============");
-        haoi(i, 'A', 'B', 'C');
+
+//        System.out.println("==============fibonacci sequence demo=============");
+//        System.out.println(fibonacci(i, "", new HashMap<Integer, Long>()));
+//        //System.out.println("==============binary string construction demo=============");
+//       // binaryStringDemo("", "", i);
+        //System.out.println("==============hanoi tower demo=============");
+        //haoi(i, 'A', 'B', 'C');
     }
 
     /**

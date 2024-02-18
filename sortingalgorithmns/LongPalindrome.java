@@ -1,6 +1,7 @@
 package SortingAlgorithmns;
 
 import java.util.*;
+
 class Palindrome {
     int high;
     int low;
@@ -75,5 +76,6 @@ public class LongPalindrome {
         System.out.println(len);
         System.out.println(s.substring(left,right));
         scan.close();
+
     }
 }
