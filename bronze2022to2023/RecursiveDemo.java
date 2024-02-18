@@ -1,10 +1,6 @@
-<<<<<<< HEAD:usaco_2023_jan_bronz/RecursiveDemo.java
 
-
-
-=======
 package bronze2022to2023;
->>>>>>> 1df1e03d395f6f8458340dfc8c2b6b9ab079791c:bronze2022to2023/RecursiveDemo.java
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,21 +8,13 @@ public class RecursiveDemo {
 
     public static void main(String[] args) {
         int i = 60;
-<<<<<<< HEAD:usaco_2023_jan_bronz/RecursiveDemo.java
+
 //        System.out.println("==============fibonacci sequence demo=============");
 //        System.out.println(fibonacci(i, "", new HashMap<Integer, Long>()));
 //        //System.out.println("==============binary string construction demo=============");
 //       // binaryStringDemo("", "", i);
         //System.out.println("==============hanoi tower demo=============");
         //haoi(i, 'A', 'B', 'C');
-=======
-        System.out.println("==============fibonacci sequence demo=============");
-        System.out.println(fibonacci(i, "", new HashMap<Integer, Long>()));
-        System.out.println("==============binary string construction demo=============");
-        binaryStringDemo("", "", i);
-        System.out.println("==============hanoi tower demo=============");
-        haoi(i, 'A', 'B', 'C');
->>>>>>> 1df1e03d395f6f8458340dfc8c2b6b9ab079791c:bronze2022to2023/RecursiveDemo.java
     }
 
     /**
