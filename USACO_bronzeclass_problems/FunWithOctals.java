@@ -1,8 +1,5 @@
-<<<<<<< HEAD:USACO_bronze_problems/FunWithOctals.java
-package USACO_bronze_problems;
-=======
+
 package USACO_bronzeclass_problems;
->>>>>>> 1df1e03d395f6f8458340dfc8c2b6b9ab079791c:USACO_bronzeclass_problems/FunWithOctals.java
 import java.util.*;
 
 

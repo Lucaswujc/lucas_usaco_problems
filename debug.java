@@ -4,12 +4,11 @@ LANG: JAVA
 TASK: friday
 */
 import java.io.*;
-import java.util.*;
 
 public class debug {
   public static void main (String [] args) throws IOException {
     // Use BufferedReader rather than RandomAccessFile; it's much faster
-    BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
+    // BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
     PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("debug.out")));
     //StringTokenizer st = new StringTokenizer(scan.readLine());
     for(int i = 1; i <= 10000; i++){
