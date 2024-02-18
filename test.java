@@ -1,5 +1,4 @@
 import java.util.*;
-<<<<<<< HEAD
 import java.io.*;
 import java.lang.Math.*;
 
@@ -145,12 +144,10 @@ public class test {
             t--;
         }
         */
-=======
 public class test {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.println("dean".compareTo("deab"));
         scan.close();
->>>>>>> 1df1e03d395f6f8458340dfc8c2b6b9ab079791c
     }
 }
