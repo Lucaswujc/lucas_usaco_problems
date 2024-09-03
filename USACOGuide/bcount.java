@@ -5,7 +5,7 @@ public class bcount {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("bcount.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("bcount.out")));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int n  = Integer.parseInt(st.nextToken());
         int q = Integer.parseInt(st.nextToken());
         int[][] prefix = new int[3][n+1];
