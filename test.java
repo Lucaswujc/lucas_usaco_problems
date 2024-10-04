@@ -7,26 +7,25 @@ public class test {
     // Scan numbers
     // Divide numbers by 2 until one is even
     // If any number is even to start with answer is 0
-    public static void main(String [] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(scan.readLine());
-        int n = Integer.parseInt(st.nextToken);
+        int n = Integer.parseInt(st.nextToken());
         int[] want = new int[n];
         int[] curr = new int[n];
         st = new StringTokenizer(scan.readLine());
-        for(int i =0; i < n; i++){
-            want[i] = Integer.parseInt(st.nextToken);
+        for (int i = 0; i < n; i++) {
+            want[i] = Integer.parseInt(st.nextToken());
         }
         st = new StringTokenizer(scan.readLine());
-        for(int i =0; i < n; i++){
-            want[i] = Integer.parseInt(st.nextToken);
+        for (int i = 0; i < n; i++) {
+            want[i] = Integer.parseInt(st.nextToken());
         }
-        for(int i = n-1; i > 0; i--){
-            if(curr[i] == want[i]){
+        for (int i = n - 1; i > 0; i--) {
+            if (curr[i] == want[i]) {
                 continue;
-            }
-            else{
-                
+            } else {
+
             }
         }
         /* Problem 3
@@ -146,10 +145,6 @@ public class test {
         }
         */
 
-public class test {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("dean".compareTo("deab"));
-        scan.close();
+
     }
 }
