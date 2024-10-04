@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class 2023january_prob3 {
+public class january_prob3 {
   public static void main (String [] args) throws IOException {
     BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
     PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("2023january_prob3.out")));

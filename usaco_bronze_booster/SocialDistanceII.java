@@ -111,4 +111,13 @@ public class SocialDistanceII {
         }
         return r;
     }
+
+    static class Cow{
+        int idx;
+        boolean sick;
+        Cow(int idx, boolean sick){
+            this.idx = idx;
+            this.sick = sick;
+        }
+    }
 }
