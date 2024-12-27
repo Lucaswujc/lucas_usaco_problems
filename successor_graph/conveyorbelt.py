@@ -124,6 +124,7 @@ def mark_cells(graph):
         if (graph[len(graph)-1][n] == '?' or graph[len(graph)-1][n] == 'D'):
             good_cells.add((len(graph)-1, n))
     # print(f"border cells {sorted(good_cells)}")
+    visited = set().update(good_cells)
     for row in range(len(graph)):
         for col in range(len(graph)):
             if (row, col) not in good_cells:
@@ -177,7 +178,7 @@ for t in range(Q):
     line = input()
     x = int(line.split(' ')[0])
     y = int(line.split(' ')[1])
-    belt = str(line.split(' ')[2]).strip()
-    graph[x-1][y-1] = belt
+    move = str(line.split(' ')[2]).strip()
+    graph[x-1][y-1] = move
     # print_graph(graph=graph)
     print(mark_cells(graph))
