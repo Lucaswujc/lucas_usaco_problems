@@ -3,3 +3,4 @@
 .gitignore
 out/**
 **/*.class
+.DS_Store
