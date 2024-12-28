@@ -17,7 +17,8 @@ def generage_array(score_array, index, max_score_c):
             # move to the next index 
             yield from generage_array(score_array, index + 1, max_score_c)
     else:
-        # if the current position is zero, then assign a score to it by iterating from 1..max_score_c
+        # if the current position is zero, then assign a score to it by 
+        # iterating from 1..max_score_c inclusive
         # brutal force approach
         for score in range(1, max_score_c + 1):
             score_array[index] = score
