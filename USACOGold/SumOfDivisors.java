@@ -1,3 +1,5 @@
+package USACOGold;
+
 import java.io.*;
 
 public class SumOfDivisors {
