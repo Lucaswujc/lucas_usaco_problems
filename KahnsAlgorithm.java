@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+public class KahnsAlgorithm {
+	@SuppressWarnings("unchecked")
+    public static void main(String[] args) throws IOException {
+		BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(read.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
+
+		List<Integer>[] graph = new ArrayList[n];
+		for (int i = 0; i < n; i++) { 
+            graph[i] = new ArrayList<>(); 
+        }
+		for (int i = 0; i < m; i++) {
+			st = new StringTokenizer(read.readLine());
+			int a = Integer.parseInt(st.nextToken()) - 1;
+			int b = Integer.parseInt(st.nextToken()) - 1;
+			graph[a].add(b);
+		}
+
+		int[] inDegree = new int[n];
+		for (List<Integer> nodes : graph) {
+			for (int node : nodes) { 
+                inDegree[node]++;
+            }
+		}
+
+		ArrayDeque<Integer> queue = new ArrayDeque<>();
+		List<Integer> topSort = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			if (inDegree[i] == 0) { 
+                queue.add(i); 
+            }
+		}
+		while (!queue.isEmpty()) {
+			int curr = queue.poll();
+			topSort.add(curr);
+			for (int next : graph[curr]) {
+                inDegree[next]--;
+				if (inDegree[next] == 0) { 
+                    queue.add(next); 
+                }
+			}
+		}
+
+		if (topSort.size() == n) {
+			for (int i = 0; i < topSort.size(); i++) {
+                System.out.print((topSort.get(i) + 1) + " ");
+            }
+            System.out.println();
+		} 
+        else {
+			System.out.println("IMPOSSIBLE");
+		}
+	}
+}
