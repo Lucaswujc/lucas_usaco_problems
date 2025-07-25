@@ -1,78 +1,63 @@
-
 import java.io.*;
 import java.util.*;
+
 public class WormholeSort {
-    static List<int[]>[]wormholes;
-	static boolean[] visited;
-    @SuppressWarnings("unchecked")
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("wormsort.in"));
-		PrintWriter pw = new PrintWriter("wormsort.out");
-		StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int w = Integer.parseInt(st.nextToken());
-        int[] cows = new int[n];
-        wormholes = new ArrayList[n];
-        st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < n; i++){
-            cows[i] = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) throws IOException {
+		Scanner scan = new Scanner(System.in);
+
+		int cowNum = scan.nextInt();
+		int wormholeNum = scan.nextInt();
+
+		int[] cows = new int[cowNum];
+		for (int c = 0; c < cowNum; c++) { 
+            cows[c] = scan.nextInt() - 1; 
         }
-        int maxWidth = 0;
-        for (int i = 0; i < n; i++) {
-             wormholes[i] = new ArrayList<>(); 
+
+		int maxWidth = 0;
+		List<int[]> wormholes = new ArrayList<>();
+		for (int w = 0; w < wormholeNum; w++) {
+			wormholes.add(new int[] {scan.nextInt() - 1, scan.nextInt() - 1, scan.nextInt()});
+			maxWidth = Math.max(maxWidth, wormholes.get(w)[2]);
+		}
+
+		wormholes.sort(Comparator.comparingInt(wh -> wh[2]));
+
+		int wormholeAt = wormholeNum;
+		DSU dsu = new DSU(cowNum);
+		for (int i = 0; i < cowNum; i++) {
+			while (dsu.getTop(i) != dsu.getTop(cows[i])) {
+				wormholeAt--;
+				dsu.link(wormholes.get(wormholeAt)[0], wormholes.get(wormholeAt)[1]);
+			}
+		}
+
+		System.out.println(wormholeAt == wormholeNum ? -1 : wormholes.get(wormholeAt)[2]);
+		scan.close();
+	}
+    static class DSU {
+        private final int[] parent;
+        private final int[] size;
+        public DSU(int size) {
+            parent = new int[size];
+            this.size = new int[size];
+            for (int i = 0; i < size; i++) {
+                parent[i] = i;
+                this.size[i] = 1;
             }
-        for (int i = 0; i < w; i++) {
-            st = new StringTokenizer(br.readLine());
-			int c1 = Integer.parseInt(st.nextToken()) - 1;
-			int c2 = Integer.parseInt(st.nextToken()) - 1;
-			int width = Integer.parseInt(st.nextToken());;
-			wormholes[c1].add(new int[] {c2, width});
-			wormholes[c2].add(new int[] {c1, width});
-			maxWidth = Math.max(maxWidth, width);
-		}
+        }
 
-		int lo = 0;
-		int hi = maxWidth + 1;
-		int valid = -1;
-		int[] component = new int[n];
-		while (lo <= hi) {
-			int mid = (lo + hi) / 2;
+        public int getTop(int n) {
+            return parent[n] == n ? n : (parent[n] = getTop(parent[n]));
+        }
 
-			Arrays.fill(component, -1);
-			int currComp = 0;
-			for (int c = 0; c < n; c++) {
-				if (component[c] != -1) { continue; }
-				List<Integer> frontier =
-				    new ArrayList<>(Collections.singletonList(c));
-				while (!frontier.isEmpty()) {
-					int curr = frontier.remove(frontier.size() - 1);
-					component[curr] = currComp;
-					for (int[] neighbors : wormholes[curr]) {
-						if (component[neighbors[0]] == -1 && neighbors[1] >= mid) {
-							frontier.add(neighbors[0]);
-						}
-					}
-				}
-				currComp++;
-			}
-
-			boolean sortable = true;
-			for (int c = 0; c < n; c++) {
-				if (component[c] != component[cows[c]]) {
-					sortable = false;
-					break;
-				}
-			}
-
-			if (sortable) {
-				valid = mid;
-				lo = mid + 1;
-			} else {
-				hi = mid - 1;
-			}
-		}
-        pw.println(valid == maxWidth+1 ? -w : valid);
-        br.close();
-        pw.close();
+        public boolean link(int e1, int e2) {
+            e1 = getTop(e1);
+            e2 = getTop(e2);
+            if (e1 == e2) { return false; }
+            if (size[e2] > size[e1]) { return link(e2, e1); }
+            parent[e2] = e1;
+            size[e1] += size[e2];
+            return true;
+        }
     }
 }
