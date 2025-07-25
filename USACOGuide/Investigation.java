@@ -1,3 +1,5 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
 
@@ -12,7 +14,8 @@ public class Investigation {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		List<List<Pair>> adj = new ArrayList<>(n);
-		for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+		for (int i = 0; i < n; i++)
+			adj.add(new ArrayList<>());
 
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(in.readLine());
@@ -39,8 +42,8 @@ public class Investigation {
 			long nodeDist = node.f;
 			int idx = node.s;
 			if (dist[idx] != nodeDist) {
-                continue;
-            }
+				continue;
+			}
 			for (Pair p : adj.get(idx)) {
 				long cost = p.f;
 				int child = p.s;
@@ -61,7 +64,7 @@ public class Investigation {
 
 		num[n - 1] %= MOD;
 		out.println(String.format("%d %d %d %d", dist[n - 1], num[n - 1], minf[n - 1],
-		                          max[n - 1]));
+				max[n - 1]));
 		out.close();
 	}
 
@@ -77,8 +80,10 @@ public class Investigation {
 		@Override
 		public int compareTo(Pair o) {
 			int dx = Long.compare(f, o.f);
-			if (dx == 0) return s - o.s;
-			else return dx;
+			if (dx == 0)
+				return s - o.s;
+			else
+				return dx;
 		}
 	}
 }

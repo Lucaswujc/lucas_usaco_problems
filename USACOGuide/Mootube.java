@@ -1,16 +1,20 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
 
 public class Mootube {
     static class DSU {
         int[] e;
+
         void init(int n) {
             e = new int[n];
             Arrays.fill(e, -1);
         }
 
         int get(int x) {
-            if (e[x] < 0) return x;
+            if (e[x] < 0)
+                return x;
             return e[x] = get(e[x]);
         }
 
@@ -25,7 +29,8 @@ public class Mootube {
         boolean unite(int x, int y) {
             x = get(x);
             y = get(y);
-            if (x == y) return false;
+            if (x == y)
+                return false;
             if (e[x] > e[y]) {
                 int temp = x;
                 x = y;
@@ -90,7 +95,7 @@ public class Mootube {
             queries[i] = new Query(i, v, k);
         }
 
-        Arrays.sort(edges);   // descending by weight
+        Arrays.sort(edges); // descending by weight
         Arrays.sort(queries); // descending by k
 
         DSU dsu = new DSU();

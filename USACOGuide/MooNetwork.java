@@ -1,3 +1,5 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
 
@@ -5,14 +7,16 @@ public class MooNetwork {
     static final int MAX_Y = 10;
 
     static int findParent(int[] top, int a) {
-        if (top[a] == a) return a;
+        if (top[a] == a)
+            return a;
         return top[a] = findParent(top, top[a]);
     }
 
     static boolean merge(int[] top, int[] sizes, int a, int b) {
         a = findParent(top, a);
         b = findParent(top, b);
-        if (a == b) return false;
+        if (a == b)
+            return false;
         if (sizes[b] > sizes[a]) {
             int temp = a;
             a = b;
@@ -49,7 +53,7 @@ public class MooNetwork {
                     long dx = points[i][0] - buffer[j][0];
                     long dy = points[i][1] - buffer[j][1];
                     long dist = dx * dx + dy * dy;
-                    edges.add(new long[]{dist, points[i][2], buffer[j][2]});
+                    edges.add(new long[] { dist, points[i][2], buffer[j][2] });
                 }
             }
             int y = (int) points[i][1];

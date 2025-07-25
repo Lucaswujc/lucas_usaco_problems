@@ -1,3 +1,5 @@
+package USACOGuide;
+
 import java.util.*;
 
 public class GraphGirth {

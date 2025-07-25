@@ -1,5 +1,10 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
+
+import DisjointSets;
+
 //example - kruskals
 public class RoadReparation {
 	static class Road {
@@ -23,8 +28,8 @@ public class RoadReparation {
 		for (int r = 0; r < roadNum; r++) {
 			StringTokenizer road = new StringTokenizer(read.readLine());
 			roads[r] = new Road(Integer.parseInt(road.nextToken()) - 1,
-			                    Integer.parseInt(road.nextToken()) - 1,
-			                    Integer.parseInt(road.nextToken()));
+					Integer.parseInt(road.nextToken()) - 1,
+					Integer.parseInt(road.nextToken()));
 		}
 		Arrays.sort(roads, Comparator.comparingInt(r -> r.cost));
 		DisjointSets cities = new DisjointSets(cityNum);
@@ -66,14 +71,20 @@ class DisjointSets {
 	public boolean unite(int x, int y) {
 		int xRoot = find(x);
 		int yRoot = find(y);
-		if (xRoot == yRoot) { return false; }
+		if (xRoot == yRoot) {
+			return false;
+		}
 
-		if (sizes[xRoot] < sizes[yRoot]) { return unite(yRoot, xRoot); }
+		if (sizes[xRoot] < sizes[yRoot]) {
+			return unite(yRoot, xRoot);
+		}
 		parents[yRoot] = xRoot;
 		sizes[xRoot] += sizes[yRoot];
 		return true;
 	}
 
 	/** @return whether x and y are in the same connected component */
-	public boolean connected(int x, int y) { return find(x) == find(y); }
+	public boolean connected(int x, int y) {
+		return find(x) == find(y);
+	}
 }

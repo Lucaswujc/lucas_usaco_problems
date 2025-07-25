@@ -3,52 +3,35 @@ package USACOGuide;
 import java.io.*;
 import java.util.*;
 
-public class MovieFestivalII {
-	static class Movie implements Comparable<Movie> {
-		int start, end;
-
-		public Movie(int start, int end) {
-			this.start = start;
-			this.end = end;
-		}
-
-		public int compareTo(Movie m) {
-			return Integer.compare(this.end, m.end);
-		}
-
-	}
-
+public class NearestSmallValues {
 	public static void main(String[] args) {
 		FastIO io = new FastIO();
 		int n = io.nextInt();
-		int k = io.nextInt();
-		Movie[] movies = new Movie[n];
+		int[] arr = new int[n];
 		for (int i = 0; i < n; i++) {
-			movies[i] = (new Movie(io.nextInt(), io.nextInt()));
+			arr[i] = io.nextInt();
 		}
-		Arrays.sort(movies);
-		int maxMovies = 0;
-		TreeMap<Integer, Integer> endTimes = new TreeMap<>();
-		endTimes.put(0, k);
-
-		for (Movie movie : movies) {
-			Integer lower = endTimes.floorKey(movie.start);
-			if (lower != null) {
-				maxMovies++;
-				int lowerValue = endTimes.get(lower);
-				if (lowerValue - 1 == 0) {
-					endTimes.remove(lower);
-				} else {
-					endTimes.put(lower, lowerValue - 1);
-				}
-				endTimes.put(movie.end, endTimes.getOrDefault(movie.end, 0) + 1);
+		Stack<Integer> stack = new Stack<>();
+		int[] ans = new int[n];
+		stack.push(0);
+		ans[0] = 0;
+		for (int i = 1; i < n; i++) {
+			while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+				stack.pop();
 			}
+			if (stack.isEmpty()) {
+				ans[i] = 0;
+			} else {
+				ans[i] = stack.peek() + 1;
+			}
+			stack.push(i);
 		}
-		System.out.println(maxMovies);
+		for (int i = 0; i < n; i++) {
+			io.print(ans[i] + " ");
+		}
 		io.close();
 	}
 
-	// FastIO class from usaco guide
 	static class FastIO extends PrintWriter {
 		private InputStream stream;
 		private byte[] buf = new byte[1 << 16];

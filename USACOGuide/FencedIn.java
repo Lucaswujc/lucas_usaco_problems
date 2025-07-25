@@ -1,17 +1,19 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
 
 public class FencedIn {
     static class Edge {
-		int c1, c2;
-		int cost;
+        int c1, c2;
+        int cost;
 
-		public Edge(int cost, int c1, int c2) {
-			this.c1 = c1;
-			this.c2 = c2;
-			this.cost = cost;
-		}
-	}
+        public Edge(int cost, int c1, int c2) {
+            this.c1 = c1;
+            this.c2 = c2;
+            this.cost = cost;
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("fencedin.in"));
@@ -76,6 +78,7 @@ public class FencedIn {
         br.close();
     }
 }
+
 class DSU {
     int[] parents;
     int[] sizes;
@@ -98,14 +101,20 @@ class DSU {
     public boolean unite(int x, int y) {
         int xRoot = find(x);
         int yRoot = find(y);
-        if (xRoot == yRoot) { return false; }
+        if (xRoot == yRoot) {
+            return false;
+        }
 
-        if (sizes[xRoot] < sizes[yRoot]) { return unite(yRoot, xRoot); }
+        if (sizes[xRoot] < sizes[yRoot]) {
+            return unite(yRoot, xRoot);
+        }
         parents[yRoot] = xRoot;
         sizes[xRoot] += sizes[yRoot];
         return true;
     }
 
     /** @return whether x and y are in the same connected component */
-    public boolean connected(int x, int y) { return find(x) == find(y); }
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
+    }
 }
