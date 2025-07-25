@@ -1,3 +1,5 @@
+package USACOGold;
+
 import java.io.*;
 import java.util.*;
 
@@ -5,8 +7,9 @@ public class CowAtLarge {
 	static int n, K, A = 0;
 	static List<Integer>[] adj;
 	static int[] depth, leaf, inDeg, parent;
+
 	@SuppressWarnings("unchecked")
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("atlarge.in"));
 		PrintWriter pw = new PrintWriter(new FileWriter("atlarge.out"));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -22,7 +25,9 @@ public class CowAtLarge {
 		Arrays.fill(depth, -1);
 		Arrays.fill(leaf, Integer.MAX_VALUE);
 
-		for (int i = 0; i < n; i++) { adj[i] = new ArrayList<>(); }
+		for (int i = 0; i < n; i++) {
+			adj[i] = new ArrayList<>();
+		}
 
 		for (int i = 0; i < n - 1; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -40,12 +45,16 @@ public class CowAtLarge {
 		dfs(K - 1);
 
 		for (int i = 0; i < n; i++) {
-			if (inDeg[i] == 1) { bfs(i); }
+			if (inDeg[i] == 1) {
+				bfs(i);
+			}
 		}
 
 		for (int i = 0; i < n; i++) {
 			if (i != K - 1) {
-				if (depth[parent[i]] < leaf[parent[i]] && depth[i] >= leaf[i]) { A++; }
+				if (depth[parent[i]] < leaf[parent[i]] && depth[i] >= leaf[i]) {
+					A++;
+				}
 			}
 		}
 
@@ -56,7 +65,8 @@ public class CowAtLarge {
 
 	public static void dfs(int n) {
 		for (Integer c : adj[n]) {
-			if (depth[c] != -1) continue;
+			if (depth[c] != -1)
+				continue;
 
 			depth[c] = depth[n] + 1;
 			parent[c] = n;
@@ -74,7 +84,8 @@ public class CowAtLarge {
 			leaf[curr.n] = Math.min(leaf[curr.n], curr.d);
 
 			for (Integer n : adj[curr.n]) {
-				if (leaf[n] < curr.d + 1) continue;
+				if (leaf[n] < curr.d + 1)
+					continue;
 
 				q.add(new Edge(n, curr.d + 1));
 			}
@@ -83,6 +94,7 @@ public class CowAtLarge {
 
 	private static class Edge {
 		int n, d;
+
 		public Edge(int a, int b) {
 			n = a;
 			d = b;

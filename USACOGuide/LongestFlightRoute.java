@@ -1,9 +1,11 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
 
 public class LongestFlightRoute {
 	@SuppressWarnings("unchecked")
-    public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(read.readLine());
 		int cityNum = Integer.parseInt(st.nextToken());
@@ -25,21 +27,25 @@ public class LongestFlightRoute {
 
 		int[] inDegree = new int[cityNum];
 		for (List<Integer> nodes : flights) {
-			for (int node : nodes) { 
-                inDegree[node]++;
-            }
+			for (int node : nodes) {
+				inDegree[node]++;
+			}
 		}
 
 		ArrayDeque<Integer> queue = new ArrayDeque<>();
 		List<Integer> topSort = new ArrayList<>();
 		for (int i = 0; i < cityNum; i++) {
-			if (inDegree[i] == 0) { queue.add(i); }
+			if (inDegree[i] == 0) {
+				queue.add(i);
+			}
 		}
 		while (!queue.isEmpty()) {
 			int curr = queue.poll();
 			topSort.add(curr);
 			for (int next : flights[curr]) {
-				if (--inDegree[next] == 0) { queue.add(next); }
+				if (--inDegree[next] == 0) {
+					queue.add(next);
+				}
 			}
 		}
 

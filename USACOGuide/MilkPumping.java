@@ -1,3 +1,5 @@
+package USACOGuide;
+
 // Created by Qi Wang
 import java.io.*;
 import java.util.*;
@@ -9,6 +11,7 @@ public class MilkPumping {
 	static boolean[] vist;
 	static int[] costs;
 	static int max = Integer.MIN_VALUE;
+
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new FileReader("pump.in"));
@@ -17,7 +20,9 @@ public class MilkPumping {
 
 		adjList = new List[N];
 
-		for (int i = 0; i < N; i++) { adjList[i] = new ArrayList<>(); }
+		for (int i = 0; i < N; i++) {
+			adjList[i] = new ArrayList<>();
+		}
 
 		for (int i = 0; i < M; i++) {
 			StringTokenizer st = new StringTokenizer(in.readLine());
@@ -35,9 +40,10 @@ public class MilkPumping {
 			Arrays.fill(costs, Integer.MAX_VALUE);
 			vist = new boolean[N];
 			int[] res = bfs(minF);
-			if (res[0] < 0) continue;
-			double frac = (double)res[1] / res[0];
-			max = Math.max(max, (int)Math.floor(frac * 1e6));
+			if (res[0] < 0)
+				continue;
+			double frac = (double) res[1] / res[0];
+			max = Math.max(max, (int) Math.floor(frac * 1e6));
 		}
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("pump.out")));
 		out.println(max);
@@ -54,15 +60,18 @@ public class MilkPumping {
 			Node cur = pq.poll();
 			int n = cur.No;
 
-			if (vist[n]) continue;
+			if (vist[n])
+				continue;
 			vist[n] = true;
 
 			for (int i = 0; i < adjList[n].size(); i++) {
 				int t = adjList[n].get(i).No;
 				int c = adjList[n].get(i).c + cur.c;
 
-				if (adjList[n].get(i).f < minF) continue;
-				if (vist[t]) continue;
+				if (adjList[n].get(i).f < minF)
+					continue;
+				if (vist[t])
+					continue;
 
 				if (costs[t] > c) {
 					costs[t] = c;
@@ -71,7 +80,7 @@ public class MilkPumping {
 				}
 			}
 		}
-		return new int[] {costs[N - 1] == Integer.MAX_VALUE ? -1 : costs[N - 1], min};
+		return new int[] { costs[N - 1] == Integer.MAX_VALUE ? -1 : costs[N - 1], min };
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -79,6 +88,7 @@ public class MilkPumping {
 		int No;
 		int c;
 		int f;
+
 		public Node(int n, int c, int f) {
 			No = n;
 			this.c = c;
@@ -87,7 +97,7 @@ public class MilkPumping {
 
 		@Override
 		public int compareTo(Object o) {
-			return c - ((Node)o).c;
+			return c - ((Node) o).c;
 		}
 
 		@Override

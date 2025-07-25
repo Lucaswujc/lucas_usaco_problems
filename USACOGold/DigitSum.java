@@ -1,3 +1,5 @@
+package USACOGold;
+
 import java.util.*;
 
 public class DigitSum {

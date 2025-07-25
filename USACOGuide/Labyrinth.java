@@ -1,9 +1,11 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
 
 public class Labyrinth {
-	public static int[] dX = {-1, 0, 0, 1};
-	public static int[] dY = {0, -1, 1, 0};
+	public static int[] dX = { -1, 0, 0, 1 };
+	public static int[] dY = { 0, -1, 1, 0 };
 	public static String dirs = "ULRD";
 
 	public static point A = new point(-1, -1);
@@ -26,9 +28,13 @@ public class Labyrinth {
 					blocked[i][j] = true;
 				} else {
 					blocked[i][j] = false;
-					if (S[j] == 'A') { A = new point(i, j); }
+					if (S[j] == 'A') {
+						A = new point(i, j);
+					}
 
-					if (S[j] == 'B') { B = new point(i, j); }
+					if (S[j] == 'B') {
+						B = new point(i, j);
+					}
 				}
 			}
 		}
@@ -43,8 +49,12 @@ public class Labyrinth {
 				if (next.x < 0 || next.y < 0 || next.x >= N || next.y >= M) {
 					continue;
 				}
-				if (blocked[next.x][next.y]) { continue; }
-				if (visited[next.x][next.y]) { continue; }
+				if (blocked[next.x][next.y]) {
+					continue;
+				}
+				if (visited[next.x][next.y]) {
+					continue;
+				}
 				visited[next.x][next.y] = true;
 				prevMove[next.x][next.y] = dir;
 				q.add(next);
@@ -65,7 +75,9 @@ public class Labyrinth {
 			Collections.reverse(moves);
 
 			pw.println(moves.size());
-			for (int i : moves) { pw.print(dirs.charAt(i)); }
+			for (int i : moves) {
+				pw.print(dirs.charAt(i));
+			}
 
 		} else {
 			pw.println("NO");
@@ -75,6 +87,7 @@ public class Labyrinth {
 
 	public static class point {
 		public int x, y;
+
 		public point(int x, int y) {
 			this.x = x;
 			this.y = y;

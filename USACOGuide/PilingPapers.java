@@ -1,13 +1,13 @@
-
+package USACOGuide;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
- 
+
 public class PilingPapers {
     public static final long MOD = 1000000007;
- 
+
     public static void main(String[] args) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer tokenizer = new StringTokenizer(in.readLine());
@@ -15,10 +15,10 @@ public class PilingPapers {
         long a = Long.parseLong(tokenizer.nextToken());
         long b = Long.parseLong(tokenizer.nextToken());
         char[] digits = in.readLine().replace(" ", "").toCharArray();
- 
+
         long[][] answersLeft = solve(("" + (a - 1L)).toCharArray(), digits);
         long[][] answersRight = solve(("" + b).toCharArray(), digits);
- 
+
         StringBuilder out = new StringBuilder();
         for (int q = Integer.parseInt(in.readLine()); q > 0; q--) {
             tokenizer = new StringTokenizer(in.readLine());
@@ -31,7 +31,7 @@ public class PilingPapers {
         }
         System.out.print(out);
     }
- 
+
     static long[][] solve(char[] limit, char[] digits) {
         long[][] answers = new long[digits.length][digits.length];
         for (int j = 0; j < digits.length; j++) {
@@ -52,11 +52,11 @@ public class PilingPapers {
                                 dp[x][y][0] += dp[x + 1][y][c];
                             }
                         }
- 
+
                         dp[x][y][2] += dp[x][y - 1][2];
                         dp[x][y][compare(digits[k], limit[y])] += dp[x][y - 1][1];
                         dp[x][y][0] += dp[x][y - 1][0];
- 
+
                         for (int c = 0; c <= 2; c++) {
                             dp[x][y][c] %= MOD;
                         }
@@ -65,7 +65,7 @@ public class PilingPapers {
                 for (int x = 0; x < limit.length; x++) {
                     dp[x][x][compare(digits[k], limit[x])] += 2;
                 }
- 
+
                 for (int x = 0; x < limit.length; x++) {
                     answers[j][k] += dp[x][limit.length - 1][0];
                     answers[j][k] += dp[x][limit.length - 1][1];
@@ -78,7 +78,7 @@ public class PilingPapers {
         }
         return answers;
     }
- 
+
     static int compare(char a, char b) {
         return Integer.signum(a - b) + 1;
     }

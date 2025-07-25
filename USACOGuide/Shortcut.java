@@ -1,21 +1,24 @@
+package USACOGuide;
+
 import java.io.*;
 import java.util.*;
 
 public class Shortcut {
 	static long[] farms;
 	static List<Edge>[] adj;
+
 	@SuppressWarnings("unchecked")
-    public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("shortcut.in"));
-        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("shortcut.out")));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("shortcut.out")));
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 		int T = Integer.parseInt(st.nextToken());
 		long[] dist = new long[N];
 		farms = new long[N];
 		adj = new List[N];
-        st = new StringTokenizer(br.readLine());
+		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < N; i++) {
 			farms[i] = Long.parseLong(st.nextToken());
 			dist[i] = Long.MAX_VALUE;
@@ -38,25 +41,27 @@ public class Shortcut {
 		while (!pq.isEmpty()) {
 			Edge c = pq.poll();
 
-			if (dist[c.t] <= c.e) { 
-                continue; 
-            }
+			if (dist[c.t] <= c.e) {
+				continue;
+			}
 			dist[c.t] = c.e;
 			fin.add(c);
 
 			for (Edge e : adj[c.t]) {
 				int nw = c.e + e.e;
 
-				if (dist[e.t] <= nw) { 
-                    continue; 
-                }
+				if (dist[e.t] <= nw) {
+					continue;
+				}
 
 				pq.add(new Edge(c.t, e.t, nw));
 			}
 		}
 		fin.remove(0);
 
-		for (int i = 0; i < N; i++) { adj[i].clear(); }
+		for (int i = 0; i < N; i++) {
+			adj[i].clear();
+		}
 
 		for (int i = 0; i < fin.size(); i++) {
 			Edge e = fin.get(i);
@@ -73,7 +78,7 @@ public class Shortcut {
 
 		out.println(res);
 		out.close();
-        br.close();
+		br.close();
 	}
 
 	public static long dfs(int t) {
@@ -85,6 +90,7 @@ public class Shortcut {
 
 	private static class Edge implements Comparable<Edge> {
 		int f, t, e;
+
 		public Edge(int f, int t, int e) {
 			this.t = t;
 			this.e = e;
@@ -93,7 +99,9 @@ public class Shortcut {
 
 		@Override
 		public int compareTo(Edge o) {
-			if (o.e == e) { return f - o.f; }
+			if (o.e == e) {
+				return f - o.f;
+			}
 			return e - o.e;
 		}
 	}

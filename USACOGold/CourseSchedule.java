@@ -1,3 +1,5 @@
+package USACOGold;
+
 import java.io.*;
 import java.util.*;
 
@@ -7,16 +9,16 @@ public class CourseSchedule {
 	private static boolean[] visited;
 
 	@SuppressWarnings("unchecked")
-    public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(read.readLine());
-		int n = Integer.parseInt(st.nextToken()); 
-		int m = Integer.parseInt(st.nextToken()); 
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
 
 		graph = new ArrayList[n];
-		for (int i = 0; i < n; i++) { 
-            graph[i] = new ArrayList<>(); 
-        }
+		for (int i = 0; i < n; i++) {
+			graph[i] = new ArrayList<>();
+		}
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(read.readLine());
 			int a = Integer.parseInt(st.nextToken()) - 1;
@@ -34,9 +36,9 @@ public class CourseSchedule {
 		Collections.reverse(topSort);
 
 		int[] ind = new int[n];
-		for (int i = 0; i < n; i++) { 
-            ind[topSort.get(i)] = i; 
-        }
+		for (int i = 0; i < n; i++) {
+			ind[topSort.get(i)] = i;
+		}
 
 		boolean valid = true;
 		for (int i = 0; i < n; i++) {
@@ -46,18 +48,18 @@ public class CourseSchedule {
 					break;
 				}
 			}
-            if(!valid){
-                break;
-            }
+			if (!valid) {
+				break;
+			}
 		}
 
 		if (!valid) {
 			System.out.println("IMPOSSIBLE");
 		} else {
 			for (int i = 0; i < topSort.size(); i++) {
-                System.out.print((topSort.get(i) + 1) + " ");
-            }
-            System.out.println();
+				System.out.print((topSort.get(i) + 1) + " ");
+			}
+			System.out.println();
 		}
 	}
 
