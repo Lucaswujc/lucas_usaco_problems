@@ -31,11 +31,11 @@ public class CircleCross {
                 arr[a - 1].end = i + 1;
             }
         }
-        BIT bit = new BIT(n + 5);
+        BIT bit = new BIT(n);
         int ans = 0;
         for (Pair p : arr) {
-            ans += bit.query(p.end) - bit.query(p.start);
-            bit.update(p.end, 1);
+            ans += bit.sum(p.end) - bit.sum(p.start);
+            bit.add(p.end, 1);
         }
         io.println(ans);
         io.close();
@@ -48,7 +48,7 @@ public class CircleCross {
             tree = new int[n + 5];
         }
 
-        public void update(int index, int val) {
+        public void add(int index, int val) {
             index++;
             while (index < tree.length) {
                 tree[index] += val;
@@ -56,7 +56,7 @@ public class CircleCross {
             }
         }
 
-        public int query(int index) {
+        public int sum(int index) {
             int ret = 0;
             index++;
             while (index > 0) {
