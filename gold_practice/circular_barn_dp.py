@@ -24,7 +24,6 @@ OUTPUT FORMAT (file cbarn2.out):
 Please write out the minimum amount of distance the cows need to travel.
 """
 
-import os
 from pathlib import Path
 
 """
@@ -32,9 +31,12 @@ Analysis of the problem:
 The strategy comes in the following observation:
 if we know the location to break the circle, i.e. where the first door is placed, 
 then we can treat the circular barn as a linear arrangement of rooms.
+We call the rooms started at a certain position as "rotated" rooms.
+
 We can use dynamic programming to solve the linear arrangement problem.
 We define dp[i][j] as the minimum cost to place j doors in the first i rooms.
 To compute dp[i][j], we try placing the j-th door at different positions before i.
+
 All rooms from position prev to i-1 will use this door at position prev.
 The cost for rooms from prev to i-1 using door at prev is calculated as follows:
 cost = sum((room_idx - prev) * rotated[room_idx]) for room_idx in range(prev, i)
