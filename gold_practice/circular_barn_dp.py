@@ -24,66 +24,158 @@ OUTPUT FORMAT (file cbarn2.out):
 Please write out the minimum amount of distance the cows need to travel.
 """
 
+import os
+from pathlib import Path
+
 """
-Anayslsi of the problem:
+Analysis of the problem:
 The strategy comes in the following observation:
-To minimize the total walking distance, each cow should walk to the nearest room that needs cows in
-the clockwise direction. There is no cheaper way to move the cows.
-The optimal placement of the k doors can be found by breaking the circular barn at the room 
-with the maximum number of cows. this is because it is obvious that if there is no door  at this 
-location, these cows will hace to walk from a door before this location, incurring extra distance cost.
-By breaking the circle at this point, we can treat the problem as a linear arrangement of rooms.
+if we know the location to break the circle, i.e. where the first door is placed, 
+then we can treat the circular barn as a linear arrangement of rooms.
 We can use dynamic programming to solve the linear arrangement problem.
 We define dp[i][j] as the minimum cost to place j doors in the first i rooms.
 To compute dp[i][j], we try placing the j-th door at different positions before i.
 All rooms from position prev to i-1 will use this door at position prev.
 The cost for rooms from prev to i-1 using door at prev is calculated as follows:
 cost = sum((room_idx - prev) * rotated[room_idx]) for room_idx in range(prev, i)
-The final answer will be dp[n][k], where n is the total number of rooms.
+The answer will be dp[n][k], where n is the total number of rooms.
+
+With this said, we can repeat doing this for each possible breaking point,
+and take the minimum cost among all breaking points.
+
 """
 
-line = input().strip().split()
-n, k = int(line[0]), int(line[1])
-rooms = []
-max_cows = -1
-max_cow_room_idx = -1
-for _ in range(n):
-    cow_for_room = int(input().strip())
-    if cow_for_room > max_cows:
-        max_cows = cow_for_room
-        max_cow_room_idx = _
-    rooms.append(cow_for_room)
 
-# with the locaiton of max cow, we can break the circle at that point
-# and treat it as a linear arrangement
-rotated = rooms[max_cow_room_idx:] + rooms[:max_cow_room_idx]
+def process_input(input_source=None):
+    """
+    Process input from either stdin or a file.
+
+    Args:
+        input_source: None (for stdin), file path string, or file-like object
+
+    Returns:
+        tuple: (n, k, rooms, max_cow_room_idx)
+    """
+    if input_source is None:
+        # Read from stdin
+        lines = []
+        try:
+            while True:
+                lines.append(input())
+        except EOFError:
+            pass
+    elif isinstance(input_source, str):
+        # Read from file path
+        with open(input_source, "r") as f:
+            lines = [line.strip() for line in f.readlines()]
+    else:
+        # Assume it's a file-like object
+        lines = [line.strip() for line in input_source.readlines()]
+
+    # Parse the input
+    line = lines[0].strip().split()
+    n, k = int(line[0]), int(line[1])
+    rooms = []
+    max_cows = -1
+    max_cow_room_idx = -1
+    for i in range(n):
+        cow_for_room = int(lines[i + 1].strip())
+        if cow_for_room > max_cows:
+            max_cows = cow_for_room
+            max_cow_room_idx = i
+        rooms.append(cow_for_room)
+    return n, k, rooms, max_cow_room_idx
 
 
-# dp[i][j] = minimum cost to place j doors in the first i rooms
-# INF represents impossible state
-INF = float("inf")
-dp = [[INF] * (k + 1) for _ in range(n + 1)]
-dp[0][0] = 0
+def solve_linear_barn(rotated, n, k):
+    # dp[i][j] = minimum cost to place j doors in the first i rooms
+    # INF represents impossible state
+    INF = float("inf")
+    dp = [[INF] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 0
 
-# For each position
-for i in range(1, n + 1):
-    # For each number of doors used so far
-    for j in range(1, min(i, k) + 1):
-        # Try placing the j-th door at different positions before i
-        # All rooms from position prev to i-1 will use this door at position prev
-        for prev in range(j - 1, i):
-            if dp[prev][j - 1] == INF:
-                continue
+    # For each position
+    for i in range(1, n + 1):
+        # For each number of doors used so far
+        for j in range(1, min(i, k) + 1):
+            # Try placing the j-th door at different positions before i
+            # All rooms from position prev to i-1 will use this door at position prev
+            for prev in range(j - 1, i):
+                if dp[prev][j - 1] == INF:
+                    continue
 
-            # Calculate cost for rooms from prev to i-1 using door at prev
-            cost = 0
-            for room_idx in range(prev, i):
-                # Distance from door (at prev) to room_idx
-                distance = room_idx - prev
-                cost += distance * rotated[room_idx]
+                # Calculate cost for rooms from prev to i-1 using door at prev
+                cost = 0
+                for room_idx in range(prev, i):
+                    # Distance from door (at prev) to room_idx
+                    distance = room_idx - prev
+                    cost += distance * rotated[room_idx]
 
-            dp[i][j] = min(dp[i][j], dp[prev][j - 1] + cost)
+                dp[i][j] = min(dp[i][j], dp[prev][j - 1] + cost)
+    return dp[n][k]
 
-min_cost = dp[n][k]
 
-print(min_cost)
+def solve_circular_barn(n, k, rooms):
+    min_cost = float("inf")
+    for i in range(len(rooms)):
+        rotated = rooms[i:] + rooms[:i]
+        min_cost = min(min_cost, solve_linear_barn(rotated, n, k))
+    return min_cost
+
+
+def get_test_files(directory="~/Downloads/cbarn2_gold_feb16/"):
+    """
+    Get all .in and .out files from the specified directory.
+
+    Args:
+        directory: Path to the directory (default: ~/Downloads/cbarn2_gold_feb16/)
+
+    Returns:
+        tuple: (list of .in files, list of .out files)
+    """
+    # Expand the ~ to the home directory
+    dir_path = Path(directory).expanduser()
+
+    # Check if directory exists
+    if not dir_path.exists():
+        return [], []
+
+    # Get all .in files
+    in_files = sorted(dir_path.glob("*.in"))
+
+    # Get all .out files
+    out_files = sorted(dir_path.glob("*.out"))
+
+    return in_files, out_files
+
+
+def main(input_source=None):
+    """
+    Main function to solve the circular barn problem.
+
+    Args:
+        input_source: None (for stdin), file path string, or file-like object
+    """
+    in_files, out_files = get_test_files()
+    if in_files and out_files:
+        for in_file, out_file in zip(in_files, out_files):
+            print(f"Processing input file: {in_file}")
+            n, k, rooms, max_cow_room_idx = process_input(str(in_file))
+            min_cost = solve_circular_barn(n, k, rooms)
+            with open(out_file, "r") as f:
+                expected_output = int(f.read().strip())
+            assert min_cost == expected_output, (
+                f"Test failed for {in_file}: expected {expected_output}, got {min_cost}"
+            )
+            print(f"Test passed for {in_file}: {min_cost}")
+    else:
+        n, k, rooms, max_cow_room_idx = process_input(input_source=None)
+        min_cost = solve_circular_barn(n, k, rooms)
+        print(min_cost)
+
+
+if __name__ == "__main__":
+    # Example usage:
+    # main()  # Read from stdin
+    # main("input.txt")  # Read from file
+    main()
