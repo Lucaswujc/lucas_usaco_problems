@@ -55,5 +55,43 @@ print(result)
 
 """
 
+another dp approach --- from tutorial 
+weight[i] = weight of each person 
+rides[S] = minimum number of rides to get all people in set S to top floor
+last(S) = minimum weight in the last ride to get all people in set S to top floor
+Base case: rides[empty set] = 0, last(empty set) = 0
+Transition:
+then to compute rides[S], we can try to add one person i in S to the last ride
+if last(S - {i}) + weight[i] <= X:
+rides[S] = rides[S - {i}] + 0
+last(S) = last(S - {i}) + weight[i]
+else:
+rides[S] = rides[S - {i}] + 1
+last(S) = weight[i]
 
+Question: does it matter for the minweight last(S) ????? there seems to be no logic controlling the last(S) has to be minimum weight. 
 """
+
+rides = [INF] * (1 << N)
+last = [0] * (1 << N)
+rides[0] = 0  # base case: no people, no rides needed
+for S in range(1, 1 << N):
+    for i in range(N):
+        if S & (1 << i):  # person i in set S
+            prev_S = S ^ (1 << i)  # ^ is bitwise xor, remove person i from set S
+            if last[prev_S] + weights[i] <= X:
+                # add person i to current ride
+                rides[prev_S] = rides[prev_S]  # no new ride needed
+                last[prev_S] = last[prev_S] + weights[i]  # update last ride weight
+            else:
+                # start a new ride with person i
+                rides[prev_S] = rides[prev_S] + 1
+                last[prev_S] = weights[i]
+            # update rides and last for set S
+            if rides[prev_S] < rides[S]:
+                last[S] = last[prev_S]
+                rides[S] = rides[prev_S]
+
+# The answer will be rides[(1 << N) - 1]
+result = rides[(1 << N) - 1]
+print(result)
